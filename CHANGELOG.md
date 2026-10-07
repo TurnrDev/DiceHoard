@@ -7,6 +7,15 @@ and Hoard adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [0.1.2] - 2026-10-07
+
+### Changed
+
+- XP Share now divides awards among every active player character, including
+  characters without an attached player context.
+
+## [0.1.1] - 2026-09-16
+
 ### Added
 
 - Restored calculated character statistics for hit points, initiative, proficiency,
