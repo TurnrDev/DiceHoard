@@ -1,0 +1,14 @@
+services:
+  mongo:
+    image: mongo:6
+    command: ["--storageEngine=wiredTiger"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: meteor
+      MONGO_INITDB_ROOT_PASSWORD: meteor
+    ports:
+      - "27017:27017"
+    volumes:
+      - dicecloud-dev-mongo:/data/db
+
+volumes:
+  dicecloud-dev-mongo:

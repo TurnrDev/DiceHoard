@@ -1,0 +1,6 @@
+{
+  "public": {
+    "environment": "development",
+    "disablePatreon": true
+  }
+}
