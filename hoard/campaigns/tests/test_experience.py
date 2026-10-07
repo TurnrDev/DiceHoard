@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from hoard.campaigns.models import Campaign, ExperienceTransaction
+from hoard.campaigns.models import Campaign, Character, ExperienceTransaction
 from hoard.campaigns.services import reverse_experience_transaction
 
 from .helpers import make_character
@@ -41,6 +41,27 @@ class SharedExperienceTests(TestCase):
 
         inactive.activate()
         self.assertEqual(inactive.experience, 10)
+
+    def test_active_player_characters_without_contexts_receive_a_share(self) -> None:
+        first = Character.objects.create(
+            campaign=self.campaign,
+            kind=Character.Kind.PC,
+            is_active=True,
+            name="First",
+        )
+        second = Character.objects.create(
+            campaign=self.campaign,
+            kind=Character.Kind.PC,
+            is_active=True,
+            name="Second",
+        )
+
+        self.campaign.award_shared_experience(10)
+
+        self.campaign.refresh_from_db()
+        self.assertEqual(first.experience, 5)
+        self.assertEqual(second.experience, 5)
+        self.assertEqual(self.campaign.shared_experience, 5)
 
     def test_invalid_awards_and_reversal_are_handled(self) -> None:
         with self.assertRaises(ValidationError):

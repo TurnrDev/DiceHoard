@@ -74,7 +74,6 @@ def award_shared_experience(
                 campaign=campaign,
                 kind=Character.Kind.PC,
                 is_active=True,
-                context__isnull=False,
             )
             .order_by("pk")
         )
