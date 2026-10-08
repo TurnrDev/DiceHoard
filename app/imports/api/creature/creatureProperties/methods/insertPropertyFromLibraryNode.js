@@ -106,6 +106,14 @@ function insertPropertyFromNode(nodeId, root, parentId) {
     collectionMap: { 'libraryNodes': 'creatureProperties' }
   });
 
+  // The copied nodes retain the library root after their IDs are renewed.
+  // Move the whole copied tree into the destination creature, with the
+  // selected library node attached directly to the requested parent.
+  nodes.forEach(copiedNode => {
+    copiedNode.root = root;
+  });
+  node.parentId = parentId;
+
   // Mark root node as dirty
   node.dirty = true;
 
