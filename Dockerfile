@@ -16,8 +16,10 @@ RUN curl -fsSL https://install.meteor.com/ | sh
 ENV PATH=/home/meteor/.meteor:${PATH}
 
 # Meteor manages the npm version compatible with this older application.
-RUN meteor npm install \
-  && meteor build --directory /home/meteor/bundle --architecture os.linux.x86_64
+# Keep these layers separate: package installation is cacheable, and Docker
+# clearly reports whether a slow build is dependency setup or bundling.
+RUN meteor npm install
+RUN meteor build --directory /home/meteor/bundle --architecture os.linux.x86_64
 
 FROM node:14-bullseye-slim
 
