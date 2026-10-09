@@ -1,27 +1,29 @@
-FROM ubuntu:jammy
+# Build from this checkout. Production must include this fork's migrations and
+# library-import fixes, rather than cloning upstream DiceCloud.
+FROM node:14-bullseye AS builder
 
-USER root
-RUN adduser --system mt
+RUN apt-get update \
+  && apt-get install --no-install-recommends --yes curl git python3 make g++ \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update
-RUN apt-get install --quiet --yes curl
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get update
-RUN apt-get install --quiet --yes nodejs git
+RUN useradd --create-home --shell /bin/bash meteor
+USER meteor
+WORKDIR /home/meteor/app
+COPY --chown=meteor:meteor app/ ./
 
-USER mt
+RUN curl -fsSL https://install.meteor.com/ | sh
+ENV PATH=/home/meteor/.meteor:${PATH}
 
-RUN curl https://install.meteor.com/ | sh
+# Meteor manages the npm version compatible with this older application.
+RUN meteor npm install \
+  && meteor build --directory /home/meteor/bundle --architecture os.linux.x86_64
 
-WORKDIR /home/mt
-RUN git clone https://github.com/ThaumRystra/DiceCloud dicecloud
-WORKDIR /home/mt/dicecloud/app
-RUN npm install --production
-ENV PATH=$PATH:/home/mt/.meteor
-RUN meteor build --directory ~/dc/ --architecture os.linux.x86_64
-WORKDIR /home/mt/dc/bundle/programs/server
-RUN npm install
-WORKDIR /home/mt/dc/bundle
-RUN rm -r /home/mt/dicecloud
+FROM node:14-bullseye-slim
 
-ENTRYPOINT node main.js
+ENV NODE_ENV=production
+WORKDIR /opt/dicehoard
+COPY --from=builder /home/meteor/bundle/bundle/ ./
+RUN npm install --omit=dev
+
+EXPOSE 3000
+CMD ["node", "main.js"]
