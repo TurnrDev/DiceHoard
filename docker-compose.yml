@@ -11,13 +11,11 @@ services:
     restart: unless-stopped
     command:
       - --storageEngine=wiredTiger
-      - --replSet=rs0
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-dicehoard}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:?Set MONGO_INITDB_ROOT_PASSWORD in .env}
     volumes:
       - ${DICEHOARD_DATA_DIR:-/data/appdata/dicehoard}/db:/data/db
-      - ./docker/mongo-init-replica.sh:/docker-entrypoint-initdb.d/mongo-init-replica.sh:ro
     networks:
       - dicehoard
     healthcheck:
@@ -41,7 +39,6 @@ services:
     environment:
       ROOT_URL: https://${DICEHOARD_HOST:-dnd.turnr.net}
       MONGO_URL: mongodb://${MONGO_INITDB_ROOT_USERNAME:-dicehoard}:${MONGO_INITDB_ROOT_PASSWORD}@db:27017/dicecloud?authSource=admin
-      MONGO_OPLOG_URL: mongodb://${MONGO_INITDB_ROOT_USERNAME:-dicehoard}:${MONGO_INITDB_ROOT_PASSWORD}@db:27017/local?authSource=admin
       PORT: 3000
       NODE_ENV: production
       METEOR_SETTINGS: '{"public":{"environment":"production","disablePatreon":true}}'
