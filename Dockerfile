@@ -30,8 +30,7 @@ COPY --from=builder /home/meteor/bundle/bundle/ ./
 # Meteor writes its deployable Node package manifest here. Installing at the
 # bundle root leaves runtime.js unable to resolve @meteorjs/reify.
 WORKDIR /opt/dicehoard/programs/server
-RUN npm install \
-  && node -e "require.resolve('@meteorjs/reify/lib/runtime')"
+RUN npm install
 WORKDIR /opt/dicehoard
 
 EXPOSE 3000
