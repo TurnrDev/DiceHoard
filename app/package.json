@@ -1,11 +1,11 @@
 {
-  "name": "dicecloud",
-  "version": "2.1.0",
-  "description": "Online Realtime TTRPG Engine",
+  "name": "dicehoard",
+  "version": "0.1.0",
+  "description": "An independent DiceCloud fork with D&D 5e campaign and party management",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ThaumRystra/DiceCloud"
+    "url": "https://github.com/TurnrDev/DiceHoard.git"
   },
   "author": "Thaum Rystra",
   "scripts": {
@@ -137,5 +137,8 @@
       "@typescript-eslint/no-this-alias": "off",
       "@typescript-eslint/no-explicit-any": "off"
     }
-  }
+  },
+  "contributors": [
+    "TurnrDev"
+  ]
 }
