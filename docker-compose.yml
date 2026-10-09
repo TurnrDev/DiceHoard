@@ -1,26 +1,53 @@
-version: '3.7'
+networks:
+  web:
+    external: true
+  dicehoard:
+    driver: bridge
+    name: dicehoard
 services:
-  dicecloud-db:
-    container_name: dicecloud-db
+  db:
     image: mongo:latest
+    container_name: dicehoard_db
     command:
       - --storageEngine=wiredTiger
-    volumes:
-      - ./dicecloud/data/db:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=meteor
-      - MONGO_INITDB_ROOT_PASSWORD=meteor
-  dicecloud:
-    container_name: dicecloud
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-dicehoard}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - /data/appdata/dicehoard/db:/data/db
+    networks:
+      - dicehoard
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping').ok", "--quiet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  app:
+    container_name: dicehoard
     build:
       context: ./
     environment:
-    #update ROOT_URL, PORT, and MAIL_URL for your environment
-      - ROOT_URL=http://localhost:3000
-      - MONGO_URL=mongodb://meteor:meteor@dicecloud-db:27017
+      - ROOT_URL=https://dnd.turnr.net
+      - MONGO_URL=mongodb://meteor:meteor@dicehoard_db:27017
       - PORT=3000
       - NODE_ENV=production
       - METEOR_SETTINGS={"public":{"environment":"production","disablePatreon":true}}
-      - MAIL_URL=smtp://EMAIL:PASSWORD@SERVER:PORT
-    ports:
-      - '3000:3000' #The internal port should match the port set in the environmental variables
+      # - MAIL_URL=smtp://EMAIL:PASSWORD@SERVER:PORT  # TBD
+    # ports:
+    #   - '3000:3000' #The internal port should match the port set in the environmental variables
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      traefik.enable: true
+      traefik.docker.network: web
+      traefik.http.routers.hoard.entrypoints: public
+      traefik.http.routers.hoard.rule: Host(`dnd.turnr.net`)
+      traefik.http.routers.hoard.tls: true
+      traefik.http.routers.hoard.tls.certresolver: cloudflare
+      traefik.http.services.hoard.loadbalancer.server.port: 3000
+    networks:
+      - web
+      - dicehoard
