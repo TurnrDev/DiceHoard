@@ -20,12 +20,14 @@ ENV PATH=/home/meteor/.meteor:${PATH}
 # clearly reports whether a slow build is dependency setup or bundling.
 RUN meteor npm install
 RUN meteor build --directory /home/meteor/bundle --architecture os.linux.x86_64
+RUN node -p "require('./package.json').version" > /home/meteor/CONTAINER_VERSION
 
 FROM node:14-bullseye-slim
 
 ENV NODE_ENV=production
 WORKDIR /opt/dicehoard
 COPY --from=builder /home/meteor/bundle/bundle/ ./
+COPY --from=builder /home/meteor/CONTAINER_VERSION ./CONTAINER_VERSION
 
 # Meteor writes its deployable Node package manifest here. Installing at the
 # bundle root leaves runtime.js unable to resolve @meteorjs/reify.
@@ -34,4 +36,4 @@ RUN npm install
 WORKDIR /opt/dicehoard
 
 EXPOSE 3000
-CMD ["node", "main.js"]
+CMD ["sh", "-c", "export CONTAINER_VERSION=\"$${CONTAINER_VERSION:-$$(cat /opt/dicehoard/CONTAINER_VERSION)}\"; exec node main.js"]
