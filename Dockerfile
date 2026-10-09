@@ -2,9 +2,10 @@
 # library-import fixes, rather than cloning upstream DiceCloud.
 FROM node:14-bullseye AS builder
 
-RUN apt-get update \
-  && apt-get install --no-install-recommends --yes curl git python3 make g++ \
-  && rm -rf /var/lib/apt/lists/*
+# The official Node builder image already contains curl and the native-module
+# build toolchain. Avoid an apt upgrade here: Node 14's Bullseye base is old
+# enough that mirror transitions can make an otherwise unnecessary install
+# fail with transient 404s.
 
 RUN useradd --create-home --shell /bin/bash meteor
 USER meteor
