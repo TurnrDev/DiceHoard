@@ -26,7 +26,13 @@ FROM node:14-bullseye-slim
 ENV NODE_ENV=production
 WORKDIR /opt/dicehoard
 COPY --from=builder /home/meteor/bundle/bundle/ ./
-RUN npm install --omit=dev
+
+# Meteor writes its deployable Node package manifest here. Installing at the
+# bundle root leaves runtime.js unable to resolve @meteorjs/reify.
+WORKDIR /opt/dicehoard/programs/server
+RUN npm install \
+  && node -e "require.resolve('@meteorjs/reify/lib/runtime')"
+WORKDIR /opt/dicehoard
 
 EXPOSE 3000
 CMD ["node", "main.js"]
