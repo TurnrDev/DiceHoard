@@ -16,7 +16,7 @@
           cols="12"
         >
           <h1 class="text-h4 mb-4">
-            Free, Auditable, real-time character tracking for 5th edition
+            Free, Auditable, real-time character tracking for 5e
           </h1>
           <h4 class="subheading">
             Spend less time shuffling paper, and more time playing the game
@@ -86,11 +86,11 @@
             mdi-currency-usd-off
           </v-icon>
           <h3 class="mb-2">
-            Free, open source, community funded
+            Free and open source
           </h3>
           <p>
-            DiceCloud is free to use, funded via Patreon,
-            and the source code is available on Github under a GPL license.
+            DiceHoard is free to use, and its source code is available on GitHub
+            under a GPL license.
           </p>
         </v-layout>
         <v-layout
@@ -148,7 +148,7 @@
               gradient="to bottom, rgba(0,0,0,0), rgba(0,0,0,.5)"
               height="360px"
             >
-              <v-card-title v-text="card.text" />  
+              <v-card-title v-text="card.text" />
             </v-img>
           </v-card>
         </v-col>
@@ -156,7 +156,7 @@
     </section>
     <section class="text-center grey darken-3 white--text pa-5">
       <h1>
-        Get involved in the DiceCloud community
+        Explore DiceHoard
       </h1>
       <v-layout
         wrap
@@ -165,11 +165,7 @@
         class="pa-4"
       >
         <v-btn
-          v-for="btn in [
-            {link: 'https://discord.gg/qEvdfeB', name: 'Discord'},
-            {link: 'https://www.patreon.com/dicecloud', name: 'Patreon'},
-            {link: 'https://github.com/ThaumRystra/DiceCloud', name: 'Github'},
-          ]"
+          v-for="btn in [{link: 'https://github.com/TurnrDev/DiceHoard', name: 'GitHub'}]"
           :key="btn.name"
           :href="btn.link"
           outlined
@@ -205,7 +201,6 @@ export default {
       { text: 'Hackable character builder', img: 'build-system.webp' },
       { text: 'Drag and drop inventory manager', img: 'inventory.webp' },
       { text: 'Custom libraries of content', img: 'libraries-of-content.webp' },
-      { text: 'Discord webhooks', img: 'send-to-discord.webp' },
       { text: 'Printed character sheets', img: 'printing.webp' },
     ],
   }},

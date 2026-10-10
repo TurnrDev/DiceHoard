@@ -19,7 +19,6 @@ const SignIn = () => import('/imports/client/ui/pages/SignIn.vue');
 const Register = () => import('/imports/client/ui/pages/Register.vue');
 const IconAdmin = () => import('/imports/client/ui/icons/IconAdmin.vue');
 //const Friends = () => import('/imports/client/ui/pages/Friends.vue' );
-const Feedback = () => import('/imports/client/ui/pages/Feedback.vue');
 const FunctionReference = () => import('/imports/client/ui/pages/FunctionReference.vue');
 const Account = () => import('/imports/client/ui/pages/Account.vue');
 const InviteSuccess = () => import('/imports/client/ui/pages/InviteSuccess.vue');
@@ -28,7 +27,6 @@ const EmailVerificationSuccess = () => import('/imports/client/ui/pages/EmailVer
 const EmailVerificationError = () => import('/imports/client/ui/pages/EmailVerificationError.vue');
 const ResetPassword = () => import('/imports/client/ui/pages/ResetPassword.vue');
 const NotImplemented = () => import('/imports/client/ui/pages/NotImplemented.vue');
-const PatreonLevelTooLow = () => import('/imports/client/ui/pages/PatreonLevelTooLow.vue');
 const SingleLibrary = () => import('/imports/client/ui/pages/SingleLibrary.vue');
 const SingleLibraryToolbar = () => import('/imports/client/ui/library/SingleLibraryToolbar.vue');
 const Tabletops = () => import('/imports/client/ui/pages/Tabletops.vue');
@@ -263,14 +261,6 @@ RouterFactory.configure(router => {
     },
     beforeEnter: ensureLoggedIn,
   }, {
-    path: '/feedback',
-    components: {
-      default: Feedback,
-    },
-    meta: {
-      title: 'Feedback',
-    },
-  }, {
     path: '/docs/functions',
     components: {
       default: FunctionReference,
@@ -294,7 +284,7 @@ RouterFactory.configure(router => {
       default: About,
     },
     meta: {
-      title: 'About DiceCloud',
+      title: 'About DiceHoard',
     },
   }, {
     path: '/invite/:inviteToken',
@@ -352,12 +342,7 @@ RouterFactory.configure(router => {
     },
   }, {
     path: '/patreon-level-too-low',
-    components: {
-      default: PatreonLevelTooLow,
-    },
-    meta: {
-      title: 'Patreon Tier Too Low',
-    },
+    redirect: '/',
   }, {
     path: '/icon-admin',
     name: 'iconAdmin',

@@ -1,21 +1,25 @@
 const themes = {
   light: {
-    primary: '#B71C1C',
-    secondary: '#424242',
-    accent: '#B71C1C',
-    error: '#FF6D00',
+    primary: '#1F2937',
+    secondary: '#FAF7EE',
+    accent: '#D4AF37',
+    error: '#9B1C1C',
     warning: '#FFB300',
     info: '#5C6BC0',
     success: '#43A047',
+    background: '#FAF7EE',
+    surface: '#FFFDF7',
   },
   dark: {
-    primary: '#f44336',
-    secondary: '#212121',
-    accent: '#f44336',
-    error: '#FF6D00',
+    primary: '#D4AF37',
+    secondary: '#24211D',
+    accent: '#E6C45E',
+    error: '#C83B3B',
     warning: '#FFB300',
     info: '#5C6BC0',
     success: '#43A047',
+    background: '#171614',
+    surface: '#2B2926',
   }
 }
 

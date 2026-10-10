@@ -3,6 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       app
+      color="secondary"
     >
       <Sidebar />
     </v-navigation-drawer>
@@ -11,7 +12,6 @@
       v-if="!$route.matched[0] || !$route.matched[0].components.toolbar"
       app
       color="secondary"
-      dark
       :extended="$vuetify.breakpoint.smAndUp"
       :tabs="$vuetify.breakpoint.smAndUp"
       dense
@@ -103,27 +103,34 @@ export default {
       immediate: true,
       handler(newDarkModeValue) {
         if (typeof newDarkModeValue === 'boolean') {
-          this.$vuetify.theme.dark = newDarkModeValue;
+          this.applyTheme(newDarkModeValue);
         } else {
           const deviceDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          this.$vuetify.theme.dark = !!deviceDarkMode;
+          this.applyTheme(!!deviceDarkMode);
         }
       },
     },
     '$route'(to) {
-      this.$store.commit('setPageTitle', to.meta && to.meta.title || 'DiceCloud');
+      this.$store.commit('setPageTitle', to.meta && to.meta.title || 'DiceHoard');
     }
   },
   mounted() {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (typeof this.darkMode === 'boolean') return;
-      this.$vuetify.theme.dark = !!e.matches;
+      this.applyTheme(!!e.matches);
     });
   },
   methods: {
     ...mapMutations([
       'toggleDrawer',
     ]),
+    applyTheme(dark) {
+      this.$vuetify.theme.dark = dark;
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      if (themeColor) {
+        themeColor.setAttribute('content', dark ? '#24211D' : '#FAF7EE');
+      }
+    },
   },
 };
 </script>

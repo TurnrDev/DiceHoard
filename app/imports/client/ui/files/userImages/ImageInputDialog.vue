@@ -183,7 +183,7 @@ export default {
   cursor: pointer;
 }
 .user-image.elevation-4 {
-  border: 2px solid #f44336;
+  border: 2px solid #9B1C1C;
 }
 .zoom-button {
   position: absolute;

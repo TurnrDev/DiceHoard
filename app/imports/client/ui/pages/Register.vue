@@ -9,8 +9,8 @@
         align-center
       >
         <v-img
-          src="crown-dice-logo-cropped-transparent.png"
-          width="120px"
+          src="/dicehoard-wordmark.png"
+          width="360px"
           class="ma-3"
         />
         <v-text-field

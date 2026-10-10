@@ -2,7 +2,6 @@
   <v-app-bar
     app
     color="secondary"
-    dark
     tabs
     extended
     dense

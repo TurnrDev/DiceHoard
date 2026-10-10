@@ -2,7 +2,6 @@
   <v-app-bar
     app
     color="secondary"
-    dark
     :extended="$vuetify.breakpoint.smAndUp"
     :tabs="$vuetify.breakpoint.smAndUp"
     dense

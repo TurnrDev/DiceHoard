@@ -141,14 +141,14 @@ export default {
         }, {
           selector: ele => ele.data().variable,
           style: {
-            'color': '#f44336',
+            'color': this.$vuetify.theme.currentTheme.accent,
             'font-family': 'monospace',
           }
         }, {
           selector: ele => !!ele.data().propId,
           style: {
-            'background-color': '#B71C1C',
-            'text-background-color': '#B71C1C',
+            'background-color': this.$vuetify.theme.currentTheme.primary,
+            'text-background-color': this.$vuetify.theme.currentTheme.primary,
           }
         }, {
           selector: 'edge',

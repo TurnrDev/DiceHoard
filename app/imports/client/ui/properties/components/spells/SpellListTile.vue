@@ -97,7 +97,7 @@ export default {
 
 .primary--text .v-icon,
 .primary--text .v-list__tile__sub-title {
-  color: #b71c1c
+  color: #1F2937
 }
 
 .theme--light.info-icon {

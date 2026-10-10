@@ -1,5 +1,14 @@
 <template>
   <div class="sidebar">
+    <div class="brand px-4 py-5">
+      <img
+        :src="$vuetify.theme.dark
+          ? '/dicehoard-wordmark-parchment.png'
+          : '/dicehoard-wordmark.png'"
+        alt="DiceHoard"
+        class="brand-wordmark"
+      >
+    </div>
     <v-layout
       v-if="!signedIn"
       justify-center
@@ -102,10 +111,8 @@ export default {
         //{ title: 'Friends', icon: 'mdi-account-multiple', to: '/friends', requireLogin: true },
         { title: 'Files', icon: 'mdi-file-multiple', to: '/my-files', requireLogin: true, },
         { title: 'Documentation', icon: 'mdi-book-open-variant', to: '/docs' },
-        { title: 'Feedback', icon: 'mdi-bug', to: '/feedback' },
         { title: 'About', icon: 'mdi-sign-text', to: '/about' },
-        { title: 'Patreon', icon: 'mdi-patreon', href: 'https://www.patreon.com/dicecloud' },
-        { title: 'Github', icon: 'mdi-github', href: 'https://github.com/ThaumRystra/DiceCloud/' },
+        { title: 'GitHub', icon: 'mdi-github', href: 'https://github.com/TurnrDev/DiceHoard/' },
       ];
       return links.filter(link => !link.requireLogin || isLoggedIn);
     },
@@ -148,5 +155,18 @@ export default {
 <style scoped>
 .links .v-list-item:not(:last-child):not(:only-child) {
   margin-bottom: 4px;
+}
+
+.brand {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.brand-wordmark {
+  display: block;
+  height: auto;
+  max-width: 210px;
+  width: 100%;
 }
 </style>

@@ -131,43 +131,12 @@
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-slide-x-transition>
-        <v-subheader>
-          Patreon
-        </v-subheader>
-        <v-list-item>
-          <v-list-item-action>
-            <v-tooltip right>
-              <template #activator="{ on }">
-                <v-btn
-                  icon
-                  :loading="updatePatreonLoading"
-                  v-on="on"
-                  @click="updatePatreon"
-                >
-                  <v-icon>mdi-refresh</v-icon>
-                </v-btn>
-              </template>
-              <span>Refresh Patreon status</span>
-            </v-tooltip>
-          </v-list-item-action>
-          <v-list-item-title>
-            Tier: {{ tier.name }}
-          </v-list-item-title>
-        </v-list-item>
         <v-list-item v-if="!user.services.google">
           <v-btn
             color="primary"
             @click="linkWithGoogle"
           >
             Link Google Account
-          </v-btn>
-        </v-list-item>
-        <v-list-item v-if="!user.services.patreon">
-          <v-btn
-            color="primary"
-            @click="linkWithPatreon"
-          >
-            Link Patreon Account
           </v-btn>
         </v-list-item>
       </v-list>
@@ -230,10 +199,7 @@
 
 <script lang="js">
   import router from '/imports/client/ui/router';
-  import getEntitledCents from '/imports/api/users/patreon/getEntitledCents';
   import Invites from '/imports/api/users/Invites';
-  import linkWithPatreon from '/imports/api/users/methods/linkWithPatreon'
-  import { getUserTier } from '/imports/api/users/patreon/tiers';
   import addEmail from '/imports/api/users/methods/addEmail';
   import removeEmail from '/imports/api/users/methods/removeEmail';
   import CreatureStorageStats from '/imports/client/ui/creature/creatureList/CreatureStorageStats.vue';
@@ -286,9 +252,6 @@
       apiKeyGenerationError: null,
       emailVerificationError: null,
       linkGoogleError: '',
-      linkPatreonError: '',
-      updatePatreonError: '',
-      updatePatreonLoading: false,
       // Add email
       showEmailInput: false,
       addEmailLoading: false,
@@ -298,15 +261,6 @@
       removeEmailLoading: undefined,
       removeEmailError: undefined,
     }},
-    computed: {
-      entitledCents(){
-        return getEntitledCents(this.user);
-      },
-      tier(){
-        if (!this.user) return {};
-        return getUserTier(this.user);
-      },
-    },
     methods: {
       changeUsername(){
         this.$store.commit('pushDialogStack', {
@@ -384,26 +338,6 @@
         this.linkGoogleError = '';
         Meteor.linkWithGoogle(error => {
           if (error) this.linkGoogleError = error;
-        });
-      },
-      linkWithPatreon(){
-        this.linkPatreonError = '';
-        linkWithPatreon(error => {
-          if (error) {
-            this.linkPatreonError = error;
-          } else {
-            Meteor.call('updateMyPatreonDetails', error => {
-              if (error) this.linkPatreonError = error;
-            });
-          }
-        });
-      },
-      updatePatreon(){
-        this.updatePatreonLoading = true;
-        this.updatePatreonError = '';
-        Meteor.call('updateMyPatreonDetails', error => {
-          this.updatePatreonLoading = false;
-          if (error) this.updatePatreonError = error;
         });
       },
       deleteAccount(){

@@ -9,8 +9,8 @@
         align-center
       >
         <v-img
-          src="crown-dice-logo-cropped-transparent.png"
-          width="120px"
+          src="/dicehoard-wordmark.png"
+          width="360px"
           class="ma-3"
         />
         <v-text-field
@@ -64,9 +64,9 @@
         </v-layout>
         <div class="text-caption mt-4 px-4">
           <p>
-            DiceCloud Version 2 requires a new account to use.
+            DiceHoard uses its own account system.
           </p><p>
-            Version 1 is still available at <a href="https://v1.dicecloud.com">v1.dicecloud.com</a>
+            Existing DiceCloud accounts cannot be used to sign in here.
           </p>
         </div>
       </v-layout>
@@ -86,16 +86,6 @@
       >
         Sign in with Google
       </v-btn>
-      <div class="error--text">
-        {{ patreonError }}
-      </div>
-      <v-btn
-        color="accent"
-        class="ma-2"
-        @click="patreonLogin"
-      >
-        Sign in with Patreon
-      </v-btn>
     </v-layout>
   </div>
 </template>
@@ -114,7 +104,6 @@ export default {
     ],
     error: '',
     googleError: '',
-    patreonError: '',
   }),
   methods: {
     submit() {
@@ -138,16 +127,6 @@ export default {
         }
       });
     },
-    patreonLogin() {
-      Meteor.loginWithPatreon(error => {
-        if (error) {
-          console.error(error);
-          this.patreonError = error.message;
-        } else {
-          this.$router.push(this.$route.query.redirect || 'characterList');
-        }
-      });
-    }
   },
 }
 </script>

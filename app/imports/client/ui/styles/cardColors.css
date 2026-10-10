@@ -1,28 +1,33 @@
+.theme--light.v-sheet,
+.theme--light.v-expansion-panels .v-expansion-panel {
+  background-color: #FFFCF5;
+}
+
 .theme--dark.v-sheet,
 .theme--dark.v-expansion-panels .v-expansion-panel {
-  background-color: #303030;
+  background-color: #2B2926;
 }
 
 .theme--dark .card-background {
-  background: #151515;
+  background: #171614;
 }
 
 .card-background .v-tabs-items.theme--dark {
-  background: #151515;
+  background: #171614;
 }
 
 .theme--light .card-background {
-  background: #f6f6f6;
+  background: #F5EFE4;
 }
 
 .card-background .v-tabs-items.theme--light {
-  background: #f6f6f6;
+  background: #F5EFE4;
 }
 
 .theme--dark .card-raised-background {
-  background: #1d1d1d;
+  background: #211F1C;
 }
 
 .theme--light .card-raised-background {
-  background: #fafafa;
+  background: #FFFCF5;
 }

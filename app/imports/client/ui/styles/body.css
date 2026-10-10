@@ -1,18 +1,32 @@
 html {
-  --scrollbarBG: #f0f0f0;
-  --thumbBG: #bbb;
+  --scrollbarBG: #FAF7EE;
+  --thumbBG: #6B7280;
   scrollbar-gutter: stable;
   background-color: var(--scrollbarBG);
 }
 
-html:has(#app.theme--dark) {
-  --scrollbarBG: #212121;
-  --thumbBG: #404040;
+html:has(#app.theme--dark),
+html:has(#app .theme--dark) {
+  --scrollbarBG: #171614;
+  --thumbBG: #59544C;
 }
 
-#app.theme--dark {
-  --scrollbarBG: #212121;
-  --thumbBG: #404040;
+#app.theme--dark,
+#app .theme--dark.v-application {
+  --scrollbarBG: #171614;
+  --thumbBG: #59544C;
+}
+
+#app.theme--light,
+#app .theme--light.v-application {
+  background: #FAF7EE;
+  color: #1F2937;
+}
+
+#app.theme--dark,
+#app .theme--dark.v-application {
+  background: #171614;
+  color: #FAF7EE;
 }
 
 html.lock-scroll {
