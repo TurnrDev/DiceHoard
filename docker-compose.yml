@@ -43,6 +43,9 @@ services:
       NODE_ENV: production
       METEOR_SETTINGS: '{"public":{"environment":"production","disablePatreon":true}}'
       # MAIL_URL: smtp://EMAIL:PASSWORD@SERVER:PORT  # TBD
+    volumes:
+      # Persistent uploads: user images and archived-character JSON files.
+      - ${DICEHOARD_DATA_DIR:-/data/appdata/dicehoard}/media:/opt/dicehoard/assets/app
     # ports:
     #   - '3000:3000' #The internal port should match the port set in the environmental variables
     depends_on:
@@ -50,12 +53,11 @@ services:
         condition: service_healthy
     labels:
       traefik.enable: true
-      traefik.docker.network: web
-      traefik.http.routers.hoard.entrypoints: public
-      traefik.http.routers.hoard.rule: Host(`${DICEHOARD_HOST:-dnd.turnr.net}`)
-      traefik.http.routers.hoard.tls: true
-      traefik.http.routers.hoard.tls.certresolver: cloudflare
-      traefik.http.services.hoard.loadbalancer.server.port: 3000
+      traefik.http.routers.dicehoard.entrypoints: public
+      traefik.http.routers.dicehoard.rule: Host(`${DICEHOARD_HOST:-dnd.turnr.net}`)
+      traefik.http.routers.dicehoard.tls: true
+      traefik.http.routers.dicehoard.tls.certresolver: cloudflare
+      traefik.http.services.dicehoard.loadbalancer.server.port: 3000
     networks:
       - web
       - dicehoard
